@@ -85,10 +85,10 @@
 						<h2>Popular Exchanges</h2>
 						<p>Books trending in our community right now.</p>
 					</div>
-					<button class="view-all">
-						<a href="login.jsp">View All <i
-							class="fa-solid fa-arrow-right"></i></a>
-					</button>
+					<a class="view-all" href="login.jsp">
+						View All <i
+							class="fa-solid fa-arrow-right"></i>
+					</a>
 				</div>
 
 				<div class="bookCards-container">

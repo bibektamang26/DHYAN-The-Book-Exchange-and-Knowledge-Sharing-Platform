@@ -1,4 +1,15 @@
 
+// Loading Sidebar
+var sidebarEl = document.getElementById("sidebar");
+if (sidebarEl) {
+  fetch("components/sidebar.jsp")
+    .then((response) => response.text())
+    .then((data) => {
+      sidebarEl.innerHTML = data;
+      highlightActiveNavItem(); 
+    });
+}
+
 // Highlight the active sidebar link
 function highlightActiveNavItem() {
     const currentPage = window.location.pathname.split("/").pop();

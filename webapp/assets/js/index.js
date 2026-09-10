@@ -2,27 +2,17 @@ document.addEventListener("DOMContentLoaded", function () {
   var getStartedBtn = document.querySelector(".get-started");
   if (getStartedBtn) {
     getStartedBtn.addEventListener("click", function () {
-      window.location.href =
-        window.DHYAN && DHYAN.isLoggedIn() ? "dashboard.html" : "register.html";
+      window.location.href = "register.jsp";
     });
   }
 
   var communityBtn = document.querySelector(".community");
   if (communityBtn) {
     communityBtn.addEventListener("click", function () {
-      window.location.href =
-        window.DHYAN && DHYAN.isLoggedIn() ? "community.html" : "login.html";
+      window.location.href = "login.jsp";
     });
   }
 
-  var viewAllBtn = document.querySelector(".view-all");
-  if (viewAllBtn) {
-    viewAllBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      window.location.href =
-        window.DHYAN && DHYAN.isLoggedIn() ? "books.html" : "login.html";
-    });
-  }
 
   document.querySelectorAll(".bookCards-container .card").forEach(function (card) {
     var bookmarkBtn = card.querySelector(".book-info .last button");

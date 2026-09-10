@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            registerService.registerUser(fullName, email, password);
+            registerService.registerUserService(fullName, email, password);
             PrintWriter out = response.getWriter();
             out.println("Login Successfull, Please Login!");
             response.sendRedirect("login.jsp");
