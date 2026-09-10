@@ -1,7 +1,6 @@
 package com.dhyan.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -23,19 +22,20 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-
         String fullName = request.getParameter("fullname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         try {
             registerService.registerUserService(fullName, email, password);
-            PrintWriter out = response.getWriter();
-            out.println("Login Successfull, Please Login!");
+            request.getSession().setAttribute("successMessage", "Registration Successful, please login!!");
             response.sendRedirect("login.jsp");
+            return; 
 
         } catch (SQLException e) {
-            throw new ServletException("Registration failed", e);
+            System.out.println("Registration DB Error: " + e.getMessage()); 
+            request.setAttribute("errorMessage", "Registration failed due to a database error. Please try again.");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
 }
