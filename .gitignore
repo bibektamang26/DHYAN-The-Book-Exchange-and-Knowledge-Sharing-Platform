@@ -1,4 +1,5 @@
-.env 
-webapp/WEB-INF/lib
+
+.env
+webapp/WEB-INF/lib/
 webapp/META-INF/
-com.dhyan.util/
+java/com.dhyan.util/
