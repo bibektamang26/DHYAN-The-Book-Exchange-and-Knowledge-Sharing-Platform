@@ -17,7 +17,7 @@
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com"  />
+<link rel="preconnect" href="https://fonts.gstatic.com" />
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap"
 	rel="stylesheet" />
@@ -372,15 +372,25 @@ body {
 
 <body>
 	<main class="register">
+		<%
+		if (request.getAttribute("errorMessage") != null) {
+		%>
+		<div
+			style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; font-family: Arial, sans-serif;">
+			<%=request.getAttribute("errorMessage")%>
+		</div>
+		<%
+		}
+		%>
 		<div class="register-card">
 			<div class="logo-section">
 				<img src="assets/icons/logo.png" alt="Dhyan Logo" />
 				<h1>Create Your Account</h1>
 				<p>Join our community of knowledge seekers and book lovers.</p>
 			</div>
-				
+
 			<form class="register-form" action="register" method="post">
-			
+
 				<div class="input-group">
 					<label for="fullname">Full Name</label>
 					<div class="input-wrapper">
