@@ -1,0 +1,516 @@
+/* CSS for profile.html */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+main {
+  background-color: #f3f7fd;
+  padding: 32px;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: #1e293b;
+  width: 100%;
+}
+
+.layout {
+  display: flex;
+}
+
+.profile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.layout main .profile-page .profile-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #dae2ff 0%, #f8faff 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 32px;
+}
+
+.layout main .profile-page .profile-heading .profile-image {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.layout main .profile-page .profile-heading .profile-image .image-wrapper {
+  border: 4px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  padding: 0;
+}
+
+.layout main .profile-page .profile-heading .profile-image .image-wrapper img {
+  height: 120px;
+  width: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.layout main .profile-page .profile-heading .profile-image .info h1 {
+  color: #111c2d;
+  font-size: 32px;
+  font-family: Merriweather;
+}
+
+.layout main .profile-page .profile-heading .profile-image .info p {
+  margin-bottom: 8px;
+  color: #434652;
+  font-size: 16px;
+  font-family: Inter;
+}
+
+.layout main .profile-page .profile-heading .edit-profile {
+  color: white;
+  background-color: #2443a2;
+  padding: 10px;
+  font-size: 14px;
+  margin-right: 60px;
+  border-radius: 8px;
+  border: none;
+}
+
+.info h1 {
+  font-family: "Merriweather", serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.info p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.edit-profile {
+  background-color: #0b4cb4;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.edit-profile:hover {
+  background-color: #083b8d;
+}
+
+.middle-section {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.left-stats {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.number-blue {
+  color: #003686;
+}
+.number-green {
+  color: #006b56;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.ranking-card {
+  background-color: #244ea2;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0 32px;
+  height: calc(30cqw - 6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ranking-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ranking-title {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.85;
+  color: white;
+}
+
+.ranking-subtitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ranking-icon {
+  font-size: 24px;
+}
+
+.interests-card {
+  background-color: #d8e3fb;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.interests-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tag {
+  background-color: #ffffff;
+  color: #003686;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.books-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.books-header h2 {
+  font-family: "Merriweather", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.book-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 12px 24px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.book-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 4px rgba(14, 165, 233, 0.35);
+}
+.book-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover-main-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 4px 0;
+}
+.cover-author {
+  font-size: 8px;
+  opacity: 0.7;
+}
+
+.book-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #111c2d;
+}
+
+.book-author {
+  font-size: 12px;
+  color: #434652;
+  margin-bottom: 8px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.badge-available {
+  background-color: #bcfde7;
+  color: #006b56;
+}
+
+.badge-lent {
+  background-color: #c2ddff;
+  color: #244ea2;
+}
+
+.add-book-card {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.add-book-card:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.add-icon {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid #747783;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.add-text {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+.cover-text-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+@media (max-width: 1024px) {
+  main {
+    padding: 24px;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .layout main .profile-page .profile-heading {
+    padding: 24px;
+  }
+
+  .layout main .profile-page .profile-heading .edit-profile {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout main .profile-page .profile-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .layout main .profile-page .profile-heading .edit-profile {
+    align-self: flex-end;
+  }
+
+  .middle-section {
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-card {
+    height: auto;
+    padding: 20px 24px;
+  }
+
+  .interests-card {
+    height: auto;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 16px;
+  }
+
+  .layout main .profile-page .profile-heading .profile-image {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .layout
+    main
+    .profile-page
+    .profile-heading
+    .profile-image
+    .image-wrapper
+    img {
+    height: 88px;
+    width: 88px;
+  }
+
+  .layout main .profile-page .profile-heading .profile-image .info h1 {
+    font-size: 24px;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    aspect-ratio: auto;
+    padding: 16px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .ranking-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .books-header h2 {
+    font-size: 18px;
+  }
+}

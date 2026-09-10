@@ -1,0 +1,63 @@
+/* CSS : variables */
+
+:root {
+  /* Brand Colors */
+
+  --primary-color: #244ea2;
+  --secondary-color: #70c7ad;
+
+  /* Background Color */
+
+  --background-color: #f8fafc;
+  --surface-color: #ffffff;
+
+  /* Text Colors */
+
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+
+  /* Status Color */
+
+  --success-color: #22c55e;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+
+  /* Typography */
+
+  --heading-font: "Merriweather", serif;
+  --body-font: "Inter", sans-serif;
+
+  /* Font Size */
+
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 20px;
+  --fs-xl: 32px;
+  --fs-xxl: 48px;
+
+  /* Spacing */
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Border Radius */
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* shadows */
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #1a1a2e;
+  --text-color: #f4f6fb;
+  --card-bg: #23233a;
+}

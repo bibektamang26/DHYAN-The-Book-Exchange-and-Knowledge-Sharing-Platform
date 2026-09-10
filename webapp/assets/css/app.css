@@ -1,0 +1,313 @@
+/* 
+   DHYAN app.css
+   Shared styles for the interactive layer added on top of the
+   original static design: modal, toast, form errors, small
+   state tweaks, and a dark-mode pass over the main containers.
+ */
+
+/*  Toast  */
+#dhyan-toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dhyan-toast {
+  background: var(--surface-color, #ffffff);
+  color: var(--text-primary, #111c2d);
+  border-left: 4px solid var(--primary-color, #244ea2);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.12));
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  min-width: 220px;
+  max-width: 320px;
+  animation: dhyan-toast-in 0.2s ease;
+}
+
+.dhyan-toast.success {
+  border-left-color: var(--success-color, #22c55e);
+}
+.dhyan-toast.error {
+  border-left-color: var(--error-color, #ef4444);
+}
+
+@keyframes dhyan-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*Modal */
+.dhyan-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 28, 45, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  padding: 16px;
+}
+
+.dhyan-modal {
+  background: var(--surface-color, #ffffff);
+  color: var(--text-primary, #111c2d);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.12));
+  width: 440px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-family: "Inter", sans-serif;
+}
+
+.dhyan-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dhyan-modal-header h3 {
+  font-family: "Merriweather", serif;
+  font-size: 18px;
+  margin: 0;
+}
+
+.dhyan-modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #64748b;
+  padding: 4px 8px;
+}
+
+.dhyan-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dhyan-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dhyan-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary, #434652);
+}
+
+.dhyan-field input,
+.dhyan-field select,
+.dhyan-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: var(--background-color, #f8fafc);
+  color: var(--text-primary, #111c2d);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dhyan-field input:focus,
+.dhyan-field select:focus,
+.dhyan-field textarea:focus {
+  border-color: var(--primary-color, #244ea2);
+}
+
+.dhyan-error-text {
+  color: var(--error-color, #ef4444);
+  font-size: 12px;
+  min-height: 14px;
+}
+
+.dhyan-modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dhyan-btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.dhyan-btn-primary {
+  background-color: var(--primary-color, #244ea2);
+  color: #ffffff;
+}
+
+.dhyan-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.dhyan-btn-secondary {
+  background-color: transparent;
+  color: var(--text-secondary, #434652);
+  border: 1px solid #e2e8f0;
+}
+
+.dhyan-btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Small state helpers */
+.dhyan-hidden {
+  display: none !important;
+}
+
+.dhyan-empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-secondary, #64748b);
+  font-family: "Inter", sans-serif;
+  grid-column: 1 / -1;
+}
+
+.dhyan-bookmark-active i {
+  font-weight: 900;
+  color: #ffd166 !important;
+}
+.dhyan-bookmark-active i::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f02e";
+}
+
+.dhyan-action-done,
+.action.dhyan-action-done {
+  color: #64748b !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+.dhyan-comment-box {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #edeff5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dhyan-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary, #434652);
+}
+
+.dhyan-comment-list li {
+  list-style: none;
+}
+
+.dhyan-comment-form {
+  display: flex;
+  gap: 8px;
+}
+
+.dhyan-comment-form input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--background-color, #f8fafc);
+  color: var(--text-primary, #111c2d);
+}
+
+.dhyan-comment-form button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary-color, #244ea2);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.dhyan-post-menu {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  background: var(--surface-color, #ffffff);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.12));
+  z-index: 20;
+  overflow: hidden;
+  min-width: 150px;
+}
+
+.dhyan-post-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  color: var(--error-color, #ef4444);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dhyan-post-menu button:hover {
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.post-header {
+  position: relative;
+}
+
+/* Dark mode 
+   The rest of this app's CSS (books.css, dashboard.css, requests.css,
+   community.css, profile.css, settings.css, login.css, home.css) uses
+   hard-coded light colors everywhere rather than the shared CSS
+   variables, so overriding a handful of guessed class names left the
+   UI half-themed. Instead we invert the whole page's rendered colors,
+   which re-themes every element uniformly and automatically keeps
+   text/background contrast correct (whatever was readable in light
+   mode stays readable in dark mode, since it's a straight inversion).
+   Photos (avatars, book covers, the logo, icons) are inverted back a
+   second time so they still render in their true colors. */
+
+html[data-theme="dark"] {
+  background: #ffffff;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="dark"] img,
+html[data-theme="dark"] .no-invert {
+  filter: invert(1) hue-rotate(180deg);
+}

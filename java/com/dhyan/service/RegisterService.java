@@ -13,8 +13,8 @@ public class RegisterService {
     public void registerUser(String fullName, String email, String password)
             throws SQLException {
 
-    	 String hashedPassword = DigestUtils.sha256Hex(password);
+    	String hashedPassword = DigestUtils.sha256Hex(password);
 
-        registerDAO.registerUser(fullName, email, hashedPassword);
+        registerDAO.registerNewUser(fullName, email, hashedPassword);
     }
 }
