@@ -115,3 +115,28 @@ form.addEventListener('submit', (event) => {
         event.preventDefault(); 
     }
 });
+
+window.onload = function () {
+    google.accounts.id.initialize({
+        client_id: "469510402526-q0cn4tt98sjui7f3uq9c4imr4e22ldp3.apps.googleusercontent.com",
+        ux_mode: "redirect",
+        login_uri: "http://localhost:8080/DHYAN/google-register" 
+    });
+
+    const googleBtnContainer = document.getElementById('googleBtnContainer');
+    if (googleBtnContainer) {
+        google.accounts.id.renderButton(
+            googleBtnContainer,
+            { 
+                type: "standard",
+                shape: "rectangular",
+                theme: "outline",
+                text: "continue_with",
+                size: "large",
+                logo_alignment: "center",
+                locale: "en",      
+                width: 356          
+            }
+        );
+    }
+};

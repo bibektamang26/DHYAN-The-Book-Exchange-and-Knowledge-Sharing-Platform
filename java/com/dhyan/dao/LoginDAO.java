@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.dhyan.util.DBConnection;
 
 public class LoginDAO {
-	public boolean loginUser(String email, String password) throws SQLException {
+	public String loginUser(String email, String password) throws SQLException {
 
 		String sql = "SELECT * FROM users WHERE email = ? AND password = ?;";
 		
@@ -17,9 +17,12 @@ public class LoginDAO {
 			
 			ps.setString(1, email);
 			ps.setString(2, password);
-			try(ResultSet rs = ps.executeQuery()){
-				return rs.next();
-			}
+			try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getString("full_name");
+	            }
+	            return null;
+	        }
 		}
 	}
 }

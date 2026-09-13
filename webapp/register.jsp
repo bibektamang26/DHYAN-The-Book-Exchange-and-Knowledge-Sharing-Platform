@@ -72,7 +72,7 @@ body {
 }
 
 .logo-section img {
-	height: 72px;
+	height: 56px;
 	width: auto;
 	object-fit: contain;
 	margin-bottom: 12px;
@@ -81,7 +81,7 @@ body {
 .logo-section h1 {
 	font-family: "Merriweather", serif;
 	font-weight: 700;
-	font-size: 24px;
+	font-size: 20px;
 	color: #111c2d;
 	margin: 0 0 8px 0;
 }
@@ -275,7 +275,7 @@ body {
 .divider {
 	text-align: center;
 	position: relative;
-	margin: 24px 0;
+	margin: 16px 0;
 }
 
 .divider::before {
@@ -449,10 +449,28 @@ body {
 				<span>OR</span>
 			</div>
 
-			<button type="button" class="btn-action btn-google">
-				<img src="assets/icons/google.png" alt="Google Icon" /> Continue
-				with Google
-			</button>
+			<!-- GOOGLE IDENTITY RUNTIME CONFIGURATION -->
+			<div id="g_id_onload"
+				 data-client_id="469510402526-q0cn4tt98sjui7f3uq9c4imr4e22ldp3.apps.googleusercontent.com"
+				 data-context="signup"
+				 data-ux_mode="redirect"
+				 data-login_uri="http://localhost:8080/DHYAN/google-register"
+				 data-auto_prompt="false">
+			</div>
+
+			<!-- CUSTOM STYLED GOOGLE BUTTON LAYOUT -->
+			<div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px;">
+				<div class="g_id_signin" id = "googleBtnContainer"
+					 data-type="standard"
+					 data-shape="rectangular"
+					 data-text="continue_with" 
+					 data-size="large"
+					 data-logo_alignment="center"
+					 data-locale="en"
+					 data-width="360">
+					 
+				</div>
+			</div>
 
 			<p class="signin-prompt">
 				Already have an account? <a href="login.jsp">Sign In</a>
@@ -465,7 +483,7 @@ body {
 			<a href="#">Privacy Policy</a> <a href="#">Support</a>
 		</div>
 	</footer>
-
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
 	<script src="assets/js/ui.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/register.js"></script>

@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //  New post
   var newPostText = document.getElementById("new-post-text");
   var newPostSubmit = document.getElementById("new-post-submit");
+
   if (newPostSubmit) {
     newPostSubmit.addEventListener("click", function () {
       var text = (newPostText.value || "").trim();
@@ -202,21 +203,33 @@ document.addEventListener("DOMContentLoaded", function () {
         DHYAN_UI.toast("Write something before posting.", "error");
         return;
       }
-      DHYAN.addPost({ text: text });
-      newPostText.value = "";
-      visibleCount += 1;
-      DHYAN_UI.toast("Your post is live.", "success");
-      render();
+      fetch("/addPost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "text=" + encodeURIComponent(text), 
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.text(); 
+        })
+        .then(function (data) {
+          newPostText.value = "";
+          visibleCount += 1;
+          DHYAN_UI.toast("Your post is live.", "success");
+          render();
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+          DHYAN_UI.toast("Failed to save post. Try again.", "error");
+        });
+
     });
   }
 
-  var btnNewPost = document.querySelector(".btn-new-post");
-  if (btnNewPost && newPostText) {
-    btnNewPost.addEventListener("click", function () {
-      newPostText.focus();
-      newPostText.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  }
 
   //  Load more
   var loadMoreBtn = document.getElementById("load-more-btn");

@@ -144,7 +144,7 @@
 								</a></li>
 								<li><a href="#" class="link-danger" id="deactivate-link">
 										<span><i
-											class="fa-solid fa-triangle-exclamation"></i> Deactivate
+											class="fa-solid fa-triangle-exclamation"></i> Delete
 											Account</span> <i class="fa-solid fa-chevron-right"></i>
 								</a></li>
 							</ul>

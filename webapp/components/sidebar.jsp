@@ -14,7 +14,7 @@
         <i class="fa-solid fa-chart-simple"></i>
         <span>Dashboard</span>
       </a>
-      <a href="books.jsp" class="nav-item" data-page="books">
+      <a href="BrowseBooksServlet" class="nav-item" data-page="books">
         <i class="fa-solid fa-book-open"></i>
         <span>Browse Books</span>
       </a>

@@ -29,8 +29,8 @@
 
 <body>
 	<div id="navbar">
-  <jsp:include page="/components/navbar.jsp" />
-</div>
+		<jsp:include page="/components/navbar.jsp" />
+	</div>
 
 	<main class="main-container">
 		<section class="hero">
@@ -45,8 +45,8 @@
 				<button class="community">Explore Community</button>
 			</div>
 		</section>
-
 		<section class="feature-section" id="services">
+			
 			<div class="feature-wrapper">
 				<div class="feature">
 					<div class="icon-container1">
@@ -85,9 +85,8 @@
 						<h2>Popular Exchanges</h2>
 						<p>Books trending in our community right now.</p>
 					</div>
-					<a class="view-all" href="login.jsp">
-						View All <i
-							class="fa-solid fa-arrow-right"></i>
+					<a class="view-all" href="login"> View All <i
+						class="fa-solid fa-arrow-right"></i>
 					</a>
 				</div>
 
@@ -164,10 +163,10 @@
 		</section>
 
 		<div id="footer">
-  <jsp:include page="/components/footer.jsp" />
-</div>
+			<jsp:include page="/components/footer.jsp" />
+		</div>
 	</main>
-	
+
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/ui.js"></script>
 	<script src="assets/js/index.js"></script>

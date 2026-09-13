@@ -33,11 +33,17 @@
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
 		<main>
+			<%
+			String fullName = (String) session.getAttribute("fullName");
+			%>
 			<div class="dashboard">
 				<!-- Header -->
 				<header class="dashboard-header">
 					<div class="header-text">
-						<h1>Good morning, Bibek.</h1>
+						<h1>
+							Welcome, <span style="color: #244ea2;">${sessionScope.fullName}
+								!</span>
+						</h1>
 						<p>Here's what's happening in your reading community today.</p>
 					</div>
 					<button class="btn-add-book">
@@ -81,7 +87,7 @@
 					<div class="recommended-section">
 						<div class="section-header">
 							<h2>Recommended for You</h2>
-							<a href="#" class="view-all-link">View all</a>
+							<a href="books.jsp" class="view-all-link">View all</a>
 						</div>
 
 						<div class="book-cards">
@@ -157,6 +163,80 @@
 						</button>
 					</div>
 				</section>
+				<!-- Hidden Add Book Pop-Up Modal Template -->
+				<div id="addBookModal" class="modal-overlay"
+					style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
+					<div class="modal-content"
+						style="background: var(--card-bg, #fff); padding: 25px; border-radius: 12px; width: 450px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+
+						<div class="modal-header"
+							style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+							<h2
+								style="margin: 0; font-family: 'Merriweather', serif; color: var(--text-main);">Add
+								a Book</h2>
+							<span style="cursor: pointer; font-size: 24px; color: #94a3b8;"
+								onclick="closeBookModal()">&times;</span>
+						</div>
+
+						<!-- Real native HTML Form that sends the cover file cleanly to Java -->
+						<form action="AddBookServlet" method="POST"
+							enctype="multipart/form-data" id="realBookForm">
+							<div style="margin-bottom: 15px;">
+								<label
+									style="display: block; margin-bottom: 5px; font-weight: 500;">Title</label>
+								<input type="text" name="title" placeholder="Book title"
+									style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+									required>
+							</div>
+
+							<div style="margin-bottom: 15px;">
+								<label
+									style="display: block; margin-bottom: 5px; font-weight: 500;">Author</label>
+								<input type="text" name="author" placeholder="Author name"
+									style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+									required>
+							</div>
+
+							<div style="margin-bottom: 15px;">
+								<label
+									style="display: block; margin-bottom: 5px; font-weight: 500;">Category</label>
+								<select name="category"
+									style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+									<option value="Self-Help">Self-Help</option>
+									<option value="Fiction">Fiction</option>
+									<option value="Memoir">Memoir</option>
+									<option value="Science Fiction">Science Fiction</option>
+									<option value="Other">Other</option>
+								</select>
+							</div>
+
+							<div style="margin-bottom: 15px;">
+								<label
+									style="display: block; margin-bottom: 5px; font-weight: 500;">Your
+									Area</label> <input type="text" name="location" placeholder="e.g. KTM"
+									style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+									required>
+							</div>
+
+							<div style="margin-bottom: 20px;">
+								<label
+									style="display: block; margin-bottom: 5px; font-weight: 500;">Book
+									Cover</label> <input type="file" name="bookCover" accept="image/*"
+									style="width: 100%;" required>
+							</div>
+
+							<div style="display: flex; justify-content: flex-end; gap: 10px;">
+								<button type="button"
+									style="padding: 10px 20px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer;"
+									onclick="closeBookModal()">Cancel</button>
+								<button type="submit"
+									style="padding: 10px 20px; background: #244ea2; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">Add
+									Book</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
 			</div>
 		</main>
 	</div>

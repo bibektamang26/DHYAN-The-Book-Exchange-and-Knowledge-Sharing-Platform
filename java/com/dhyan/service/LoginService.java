@@ -10,7 +10,7 @@ public class LoginService {
 	
 	private LoginDAO loginDAO = new LoginDAO();
 	
-	public boolean loginUserService(String email, String password) throws SQLException {
+	public String loginUserService(String email, String password) throws SQLException {
 		String hashedPassword = DigestUtils.sha256Hex(password);
 		
 		return loginDAO.loginUser(email, hashedPassword);

@@ -35,7 +35,7 @@
 		if (session.getAttribute("successMessage") != null) {
 		%>
 		<div
-			style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold;">
+			style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; text-align:center;">
 			<%=session.getAttribute("successMessage")%>
 		</div>
 		<%
@@ -48,7 +48,7 @@
 		if (session.getAttribute("errorMessage") != null) {
 		%>
 		<div
-			style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold;">
+			style="color: #721c24; text-align:center; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold;">
 			<%=session.getAttribute("errorMessage")%>
 		</div>
 		<%
@@ -103,17 +103,34 @@
 				<span>OR</span>
 			</div>
 
-			<button type="button" class="btn-action btn-google">
-				<img src="assets/icons/google.png" alt="Google Icon" /> Continue
-				with Google
-			</button>
+			<!-- GOOGLE IDENTITY RUNTIME CONFIGURATION -->
+			<div id="g_id_onload"
+				 data-client_id="469510402526-q0cn4tt98sjui7f3uq9c4imr4e22ldp3.apps.googleusercontent.com"
+				 data-context="signin"
+				 data-ux_mode="redirect"
+				 data-login_uri="http://localhost:8080/Project/google-register"
+				 data-auto_prompt="false">
+			</div>
+
+			<!-- CUSTOM STYLED GOOGLE BUTTON LAYOUT -->
+			<div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px;padding:4px;">
+				<div class="g_id_signin" id = "googleBtnContainer"
+					 data-type="standard"
+					 data-shape="rectangular"
+					 data-text="signin_with" 
+					 data-size="large"
+					 data-logo_alignment="center"
+					 data-locale="en"
+					 data-width="350">         
+				</div>
+			</div>
+
 
 			<div class="divider">
 				<span>NEW TO DHYAN?</span>
 			</div>
 
-			<a href="register.jsp" class="btn-action btn-secondary">Create
-				an account</a>
+			<a href="register.jsp" class="btn-action btn-secondary">Create an account</a>
 		</div>
 	</main>
 	<footer class="login-footer">
@@ -122,8 +139,10 @@
 			<a href="#">Privacy Policy</a> <a href="#">Support</a>
 		</div>
 	</footer>
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
 	<script src="assets/js/ui.js"></script>
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/login.js"></script>
 </body>
 </html>
+

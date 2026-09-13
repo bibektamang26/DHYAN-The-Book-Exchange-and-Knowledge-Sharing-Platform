@@ -43,9 +43,9 @@
 							<p>Discuss books, share insights, and connect with fellow
 								readers.</p>
 						</div>
-						<button class="btn-new-post">
+						<!-- <button class="btn-new-post">
 							<i class="fa-solid fa-pen"></i> New Post
-						</button>
+						</button> -->
 					</header>
 
 					<div class="new-post-box">
@@ -60,9 +60,7 @@
 									<button class="icon-btn">
 										<i class="fa-regular fa-image"></i>
 									</button>
-									<button class="icon-btn">
-										<i class="fa-solid fa-book-open"></i>
-									</button>
+									
 								</div>
 								<button class="btn-post" id="new-post-submit">Post</button>
 							</div>
@@ -121,6 +119,7 @@
 								</div>
 								<button class="icon-btn follow-btn">
 									<i class="fa-solid fa-user-plus"></i>
+									
 								</button></li>
 							<li><img src="assets/images/profile4.jpeg"
 								alt="Suvashan Baniya" class="avatar avatar-sm" />

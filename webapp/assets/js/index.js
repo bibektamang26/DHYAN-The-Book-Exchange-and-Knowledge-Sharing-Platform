@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
   var getStartedBtn = document.querySelector(".get-started");
   if (getStartedBtn) {
     getStartedBtn.addEventListener("click", function () {
-      window.location.href = "register.jsp";
+      window.location.href = 'register';
     });
   }
 
   var communityBtn = document.querySelector(".community");
   if (communityBtn) {
     communityBtn.addEventListener("click", function () {
-      window.location.href = "login.jsp";
+      window.location.href = 'login';
     });
   }
 

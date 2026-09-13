@@ -7,14 +7,14 @@
     </div>
     <ul class="nav-links">
       <li>
+        <a href="#services" class="nav-item active">Our Services</a>
+      </li>
+        <a href="login" class="nav-item">Community</a>
+      </li>
+      <li>
         <a href="#books" class="nav-item">Browse Books</a>
       </li>
       <li>
-        <a href="community.jsp" class="nav-item">Community</a>
-      </li>
-      <li>
-        <a href="#services" class="nav-item active">Our Services</a>
-      </li>
     </ul>
     <div class="nav-actions">
       <button class="notifications">
@@ -23,7 +23,7 @@
       </button>
       <button
         class="profile"
-        onclick="window.location.href = 'login.jsp'"
+        onclick="window.location.href = 'login'"
       >
         <i class="fa-regular fa-circle-user"></i>
       </button>

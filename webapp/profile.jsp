@@ -34,6 +34,9 @@
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
 		<main>
+			<% 
+				String fullName = (String)session.getAttribute("fullName");
+			%>
 			<!-- Profile info -->
 			<div class="profile-page">
 				<div class="profile-heading">
@@ -47,7 +50,7 @@
 								hidden />
 						</div>
 						<div class="info">
-							<h1 id="profile-name">Bibek</h1>
+							<h1 id="profile-name"><span style = "color: #244ea2;">${sessionScope.fullName}</span></h1>
 							<p id="profile-bio">Avid reader and philosophy enthusiast</p>
 						</div>
 					</div>
