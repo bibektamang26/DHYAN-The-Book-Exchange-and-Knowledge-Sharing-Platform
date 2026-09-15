@@ -18,7 +18,6 @@ public class RegisterDAO {
 			ps.setString(1, fullName);
 			ps.setString(2, email);
 			ps.setString(3, password);
-
 			ps.executeUpdate();
 			
 			
