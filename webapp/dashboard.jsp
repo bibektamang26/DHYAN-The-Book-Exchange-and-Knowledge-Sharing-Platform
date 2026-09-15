@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,20 +30,30 @@
 </head>
 <body>
 	<div class="layout">
-		<div id="sidebar">
+		        <div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
+		
+		<%@ page import="com.dhyan.model.User"%>
+		<%
+		// 1. Extract the user object from session memory
+		User loggedInUser = (User) session.getAttribute("user");
+		
+		// 2. CRUCIAL FIX: Protect against NullPointerException if session expires or doesn't exist
+		if (loggedInUser == null) {
+		    response.sendRedirect("login.jsp?error=SessionExpired");
+		    return; // Stops executing the rest of the page
+		}
+		%>
+		
 		<main>
-			<%
-			String fullName = (String) session.getAttribute("fullName");
-			%>
 			<div class="dashboard">
 				<!-- Header -->
 				<header class="dashboard-header">
 					<div class="header-text">
 						<h1>
-							Welcome, <span style="color: #244ea2;">${sessionScope.fullName}
-								!</span>
+							<!-- 3. Renders the full name safely straight out of your User object -->
+							Welcome, <span style="color: #244ea2;">${sessionScope.user.fullName} !</span>
 						</h1>
 						<p>Here's what's happening in your reading community today.</p>
 					</div>
@@ -50,6 +61,27 @@
 						<i class="fa-solid fa-plus"></i> Add Book
 					</button>
 				</header>
+				<%
+				if (session.getAttribute("dashboardSuccessMessage") != null) {
+				%>
+				<div style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px; margin-bottom: 20px; border-radius: 6px; font-weight: 500; font-family: 'Inter', sans-serif;">
+					<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <%= session.getAttribute("dashboardSuccessMessage") %>
+				</div>
+				<%
+				session.removeAttribute("dashboardSuccessMessage");
+				}
+				%>
+
+				<%
+				if (session.getAttribute("dashboardErrorMessage") != null) {
+				%>
+				<div style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin-bottom: 20px; border-radius: 6px; font-weight: 500; font-family: 'Inter', sans-serif;">
+					<i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> <%= session.getAttribute("dashboardErrorMessage") %>
+				</div>
+				<%
+				session.removeAttribute("dashboardErrorMessage"); 
+				}
+				%>
 
 				<!-- Stats Cards -->
 				<section class="stats-cards">
@@ -205,6 +237,7 @@
 									<option value="Self-Help">Self-Help</option>
 									<option value="Fiction">Fiction</option>
 									<option value="Memoir">Memoir</option>
+									<option value="Social Realism Fiction">Social Realism Fiction</option>
 									<option value="Science Fiction">Science Fiction</option>
 									<option value="Other">Other</option>
 								</select>

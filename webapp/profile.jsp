@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
+<%-- FIX 1: Import the required Java Utility List and your local Book Model --%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.dhyan.model.Book"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,7 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>DHYAN | Profile</title>
-<link rel="icon" type="image/png" href="assets/icons/logo.png" />
+<link class="nav-logo" rel="icon" type="image/png"
+	href="assets/icons/logo.png" />
 <script src="assets/js/theme.js"></script>
 
 <!-- Google Fonts -->
@@ -30,13 +34,33 @@
 
 <body>
 	<div class="layout">
+	
 		<div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
+		
 		<main>
-			<% 
-				String fullName = (String)session.getAttribute("fullName");
-			%>
+		<%
+				if (session.getAttribute("profileSuccessMessage") != null) {
+				%>
+				<div style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 12px; margin: 20px 0; border-radius: 6px; font-weight: 500; text-align: center; font-family: 'Inter', sans-serif;">
+					<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <%= session.getAttribute("profileSuccessMessage") %>
+				</div>
+				<%
+				session.removeAttribute("profileSuccessMessage"); // Clear it so it doesn't show again on refresh
+				}
+				%>
+
+				<%
+				if (session.getAttribute("profileErrorMessage") != null) {
+				%>
+				<div style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; margin: 20px 0; border-radius: 6px; font-weight: 500; text-align: center; font-family: 'Inter', sans-serif;">
+					<i class="fa-solid fa-circle-xmark" style="margin-right: 6px;"></i> <%= session.getAttribute("profileErrorMessage") %>
+				</div>
+				<%
+				session.removeAttribute("profileErrorMessage"); // Clear it so it doesn't show again on refresh
+				}
+				%>
 			<!-- Profile info -->
 			<div class="profile-page">
 				<div class="profile-heading">
@@ -50,7 +74,9 @@
 								hidden />
 						</div>
 						<div class="info">
-							<h1 id="profile-name"><span style = "color: #244ea2;">${sessionScope.fullName}</span></h1>
+							<h1 id="profile-name">
+								<span style="color: #244ea2;">${sessionScope.user.fullName}</span>
+							</h1>
 							<p id="profile-bio">Avid reader and philosophy enthusiast</p>
 						</div>
 					</div>
@@ -75,8 +101,7 @@
 						<div class="card ranking-card">
 							<div>
 								<div class="ranking-title">Community Ranking</div>
-								<div class="ranking-subtitle">Top 5% of Knowledge Sharers
-								</div>
+								<div class="ranking-subtitle">Top 5% of Knowledge Sharers</div>
 							</div>
 							<div class="ranking-icon">
 								<i class="fa-solid fa-medal"></i>
@@ -99,8 +124,67 @@
 						</button>
 					</div>
 
-					<div class="books-grid" id="my-books-grid"></div>
+					<div class="books-grid" id="my-books-grid">
+												<%
+							// Unpack request list array passed over by ProfileServlet
+							List<Book> myPersonalBooksList = (List<Book>) request.getAttribute("myPersonalBooksList");
+							
+							if (myPersonalBooksList != null && !myPersonalBooksList.isEmpty()) {
+								for (Book myBook : myPersonalBooksList) {
+									
+									// Determine badge color class based on the database status
+									String badgeClass = "badge-available";
+									if (myBook.getStatus() != null && "exchanged".equalsIgnoreCase(myBook.getStatus())) {
+										badgeClass = "badge-lent"; 
+									}
+						%>
+									<!-- INDIVIDUAL USER BOOK ITEM -->
+									<div class="book-item">
+										
+										<!-- BOOK COVER -->
+										<div class="book-cover">
+											<img src="<%= request.getContextPath() %>/<%= myBook.getCoverImagePath() %>" 
+											     alt="<%= myBook.getTitle() %>" 
+											     style="width: 100%; height: 100%; object-fit: cover;" />
+										</div>
+
+										<!-- TITLE -->
+										<div class="book-title"><%= myBook.getTitle() %></div>
+
+										<!-- AUTHOR -->
+										<div class="book-author"><%= myBook.getAuthor() %></div>
+
+										<!-- FLEX ROW: Places the badge and delete button side-by-side -->
+										<div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; width: 100%;">
+											
+											<!-- BADGE STATUS -->
+											<span class="badge <%= badgeClass %>" style="margin: 0;">
+												<%= myBook.getStatus().toUpperCase() %>
+											</span>
+											
+											<!-- THE DELETE BUTTON (Positioned right beside the badge) -->
+											<a href="DeleteBookServlet?id=<%= myBook.getBookID() %>" 
+											   style="color: #ef4444; font-size: 11px; margin-right: 8px;text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 4px;" 
+											   onclick="return confirm('Remove this book from your library?');">
+												<i class="fa-solid fa-trash-can"></i> 
+											</a>
+											
+										</div>
+									</div>
+						<%
+								}
+							} else { 
+						%>
+							<div class="no-personal-books" style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">
+								<i class="fa-solid fa-square-plus" style="font-size: 42px; margin-bottom: 12px; color: #cbd5e1;"></i>
+								<h3 style="margin: 0 0 4px 0; color: var(--text-main); font-family: 'Merriweather', serif;">Your Library Is Empty</h3>
+								<p style="margin: 0;">Any books you upload via the Dashboard modal popup will show up here for you to manage.</p>
+							</div>
+						<%
+							}
+						%>
 				</div>
+
 			</div>
 		</main>
 		<script src="assets/js/main.js"></script>

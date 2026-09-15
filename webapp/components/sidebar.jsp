@@ -26,7 +26,7 @@
         <i class="fa-solid fa-users"></i>
         <span>Community</span>
       </a>
-      <a href="profile.jsp" class="nav-item" data-page="profile">
+      <a href="ProfileServlet" class="nav-item" data-page="profile">
         <i class="fa-solid fa-user"></i>
         <span>Profile</span>
       </a>

@@ -2,7 +2,6 @@ package com.dhyan.controller;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.Part;
 
 import com.dhyan.dao.BookDAO;
 import com.dhyan.model.Book;
+import com.dhyan.model.User;
 
 @WebServlet("/AddBookServlet")
 @MultipartConfig(
@@ -22,60 +22,75 @@ import com.dhyan.model.Book;
     maxRequestSize = 1024 * 1024 * 50    // 50MB
 )
 public class AddBookServlet extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        User loggedInUser = (session != null) ? (User) session.getAttribute("user") : null;
         
-        HttpSession session = request.getSession();
-        Integer loggedInUserID = (Integer) session.getAttribute("userID");
-        
-        // Fallback placeholder ID if session logic isn't wired up yet
-        if (loggedInUserID == null) {
-            loggedInUserID = 1; 
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        if (loggedInUser == null) {
+            response.sendRedirect("login.jsp?error=SessionExpired");
+            return;
         }
 
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         String category = request.getParameter("category");
-        String area = request.getParameter("location"); // matches JS parameter key choice 'location'
+        String area = request.getParameter("location");
 
-        // Catch Cover Binary File
+        BookDAO dao = new BookDAO();
+
+        if (dao.isDuplicateBook(loggedInUser.getUserID(), title, author)) {
+            session.setAttribute("dashboardErrorMessage", "You have already added '" + title + "' to your library!");
+            response.sendRedirect("dashboard.jsp");
+            return;
+        }
+
         Part filePart = request.getPart("bookCover");
         String fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
-        
-        // Local relative app assets directory folder mapping targeting server context disk paths
+
         String appPath = request.getServletContext().getRealPath("");
         String savePath = appPath + File.separator + "uploads";
-        
+
         File fileSaveDir = new File(savePath);
         if (!fileSaveDir.exists()) {
             fileSaveDir.mkdir();
         }
 
-        filePart.write(savePath + File.separator + fileName);
-        String relativeDBPath = "uploads/" + fileName;
+        try {
+            filePart.write(savePath + File.separator + fileName);
+            String relativeDBPath = "uploads/" + fileName;
 
-        // Populate Model Domain object
-        Book newBook = new Book();
-        newBook.setTitle(title);
-        newBook.setAuthor(author);
-        newBook.setCategory(category);
-        newBook.setArea(area);
-        newBook.setCoverImagePath(relativeDBPath);
-        newBook.setUserID(loggedInUserID);
-        newBook.setStatus("Available");
+            // Populate Model Object
+            Book newBook = new Book();
+            newBook.setTitle(title);
+            newBook.setAuthor(author);
+            newBook.setCategory(category);
+            newBook.setArea(area);
+            newBook.setCoverImagePath(relativeDBPath);
+            newBook.setUserID(loggedInUser.getUserID());
+            newBook.setStatus("Available");
 
-        BookDAO dao = new BookDAO();
-        boolean success = dao.insertBook(newBook);
+            // Database Insertion Processing
+            boolean success = dao.insertBook(newBook);
 
-        if (success) {
-            // Success redirect straight to the browse loading route controller!
-            response.sendRedirect("BrowseBooksServlet");
-        } else {
-            response.sendRedirect("dashboard.jsp?error=database_fail");
+            if (success) {
+                session.setAttribute("dashboardSuccessMessage", "“" + title + "” successfully added to your library!");
+            } else {
+                session.setAttribute("dashboardErrorMessage", "Database insertion failed. Please try again.");
+            }
+        } catch (Exception e) {
+            System.err.println("File processing error: " + e.getMessage());
+            session.setAttribute("dashboardErrorMessage", "An internal error occurred while saving your book upload.");
         }
+
+        response.sendRedirect("dashboard.jsp");
     }
 
     private String getFileName(Part part) {
