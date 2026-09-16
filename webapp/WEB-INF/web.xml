@@ -3,7 +3,15 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
+
 	<display-name>DHYAN</display-name>
+
+	<!-- Google OAuth Client ID. Must be identical to data-client_id in the JSPs. -->
+	<context-param>
+		<param-name>googleClientId</param-name>
+		<param-value>469510402526-q0cn4tt98sjui7f3uq9c4imr4e22ldp3.apps.googleusercontent.com</param-value>
+	</context-param>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

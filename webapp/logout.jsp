@@ -1,5 +1,23 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
-	language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page import="com.dhyan.model.User" %>
+<%
+	// 1. Extract the user object from session memory
+	User loggedInUser = (User) session.getAttribute("user");
+	
+	// 2. Protect against NullPointerException if session expires or doesn't exist
+	if (loggedInUser == null) {
+	    response.sendRedirect("login.jsp?error=SessionExpired");
+	    return; // Stops executing the rest of the page
+	}
+
+	// 3. Extract the first name from the User object
+	String fullName = loggedInUser.getFullName();
+	String firstName = "User"; // Default fallback if name is completely empty
+	
+	if (fullName != null && !fullName.trim().isEmpty()) {
+		firstName = fullName.trim().split("\\s+")[0];
+	}
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,13 +29,10 @@
 <script src="assets/js/theme.js"></script>
 
 <!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="preconnect" href="https://googleapis.com" />
+<link rel="preconnect" href="https://gstatic.com" crossorigin />
+<link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cloudflare.com" />
 
 <!-- Global CSS -->
 <link rel="stylesheet" href="assets/css/variables.css" />
@@ -29,9 +44,6 @@
 </head>
 
 <body>
-	<%
-		String fullName = (String) session.getAttribute("fullName");
-	%>
 	<div class="layout">
 		<main>
 			<div class="auth-card">
@@ -40,14 +52,17 @@
 				<h1 class="auth-title">Log back In</h1>
 
 				<div class="auth-avatar">
-					<img src="assets/images/profileM.jpeg" alt="Alexander" />
+					<!-- Dynamically matches the user's name in the image alt attribute -->
+					<img src="assets/images/profileM.jpeg" alt="<%= firstName %>" />
 				</div>
 
-				<button class="btn-continue">Continue with <%= session.getAttribute("fullName") != null ? ((String)session.getAttribute("fullName")).trim().split("\\s+")[0] : "" %></h1></button>
+				<button class="btn-continue" onclick="window.location.href='dashboard.jsp'">
+					Continue with <%= firstName %>
+				</button>
 
 				<div class="auth-links">
-					<a href="login.jsp">Switch Account</a> <a href="register.jsp">Create
-						new account</a>
+					<a href="logout">Switch Account</a> 
+					<a href="register.jsp">Create new account</a>
 				</div>
 
 				<footer class="auth-footer">

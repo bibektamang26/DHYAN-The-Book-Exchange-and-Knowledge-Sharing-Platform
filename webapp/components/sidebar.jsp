@@ -18,7 +18,7 @@
         <i class="fa-solid fa-book-open"></i>
         <span>Browse Books</span>
       </a>
-      <a href="requests.jsp" class="nav-item" data-page="requests">
+      <a href="RequestServlet" class="nav-item" data-page="requests">
         <i class="fa-solid fa-right-left"></i>
         <span>Requests</span>
       </a>

@@ -1,5 +1,23 @@
 package com.dhyan.controller;
 
-public class GoogleLoginServlet {
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/google-login")
+public class GoogleLoginServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("Hyaa, malai k lekhne nai aayena yaar!");
+		request.getRequestDispatcher("login").forward(request, response);
+	}
 }

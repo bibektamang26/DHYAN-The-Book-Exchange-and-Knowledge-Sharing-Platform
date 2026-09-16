@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.dhyan.dao.BookDAO;
 import com.dhyan.model.Book;
 import com.dhyan.model.User;
+import com.dhyan.service.BookService;
 
 @WebServlet("/AddBookServlet")
 @MultipartConfig(
@@ -25,6 +25,9 @@ public class AddBookServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    private BookService bookService = new BookService();
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -44,14 +47,6 @@ public class AddBookServlet extends HttpServlet {
         String category = request.getParameter("category");
         String area = request.getParameter("location");
 
-        BookDAO dao = new BookDAO();
-
-        if (dao.isDuplicateBook(loggedInUser.getUserID(), title, author)) {
-            session.setAttribute("dashboardErrorMessage", "You have already added '" + title + "' to your library!");
-            response.sendRedirect("dashboard.jsp");
-            return;
-        }
-
         Part filePart = request.getPart("bookCover");
         String fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
 
@@ -67,7 +62,6 @@ public class AddBookServlet extends HttpServlet {
             filePart.write(savePath + File.separator + fileName);
             String relativeDBPath = "uploads/" + fileName;
 
-            // Populate Model Object
             Book newBook = new Book();
             newBook.setTitle(title);
             newBook.setAuthor(author);
@@ -75,15 +69,14 @@ public class AddBookServlet extends HttpServlet {
             newBook.setArea(area);
             newBook.setCoverImagePath(relativeDBPath);
             newBook.setUserID(loggedInUser.getUserID());
-            newBook.setStatus("Available");
+            newBook.setStatus("Available"); 
 
-            // Database Insertion Processing
-            boolean success = dao.insertBook(newBook);
+            boolean success = bookService.addBook(newBook);
 
             if (success) {
                 session.setAttribute("dashboardSuccessMessage", "“" + title + "” successfully added to your library!");
             } else {
-                session.setAttribute("dashboardErrorMessage", "Database insertion failed. Please try again.");
+                session.setAttribute("dashboardErrorMessage", "Could not add '" + title + "'. It might be a duplicate entry or system error.");
             }
         } catch (Exception e) {
             System.err.println("File processing error: " + e.getMessage());

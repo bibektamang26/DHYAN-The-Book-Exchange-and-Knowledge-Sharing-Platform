@@ -1,7 +1,8 @@
 package com.dhyan.controller;
 
-import com.dhyan.dao.BookDAO;
 import com.dhyan.model.User;
+import com.dhyan.service.BookService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,7 @@ import java.io.IOException;
 public class DeleteBookServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private BookDAO bookDAO = new BookDAO();
+    private BookService bookService = new BookService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -33,12 +34,11 @@ public class DeleteBookServlet extends HttpServlet {
         if (bookIdParam != null && !bookIdParam.trim().isEmpty()) {
             try {
                 int bookID = Integer.parseInt(bookIdParam);
-                
-                boolean isDeleted = bookDAO.deleteBookByID(bookID, currentUser.getUserID());
+
+                boolean isDeleted = bookService.removeBook(bookID, currentUser.getUserID());
                 
                 if (isDeleted) {
                 	session.setAttribute("deleteSuccessMessage", "Book deleted successfully!");
-                    System.out.println("Book ID " + bookID + " successfully deleted by User ID " + currentUser.getUserID());
                 } else {
                 	session.setAttribute("deleteSuccessMessage", "Failed to delete the book. Please try again.");
                     System.err.println("Failed to delete Book ID: " + bookID);

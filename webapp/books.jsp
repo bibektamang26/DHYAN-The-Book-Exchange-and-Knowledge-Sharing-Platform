@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="assets/css/app.css" />
 </head>
 <body>
+
 	<div class="bookspage-layout">
 		<div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
@@ -87,7 +88,8 @@
 						<i class="fa-solid fa-sliders"></i> Clear Filters
 					</button>
 				</div>
-
+					
+					
 				<!-- DYNAMIC BOOK GRID -->
 				<div class="book-grid" id="book-grid">
 					<%
@@ -140,7 +142,17 @@
 							<div class="book-meta">
 								<span class="book-distance"> <i
 									class="fa-solid fa-location-dot"></i> <%=book.getArea()%>
-								</span> <a href="#" class="action request"> Request </a>
+								</span>
+								<form action="RequestServlet" method="post"
+									style="display: inline;">
+									<input type="hidden" name="action" value="submitNewRequest" />
+									<input type="hidden" name="bookID"
+										value="<%=book.getBookID()%>" /> <input type="hidden"
+										name="receiverID" value="<%=book.getUserID()%>" />
+									<button onclick="return confirm('do you want to request?')"
+										type="submit" class="action request" style="cursor: pointer;">Request</button>
+
+								</form>
 							</div>
 						</div>
 					</div>

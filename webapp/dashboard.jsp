@@ -36,13 +36,13 @@
 		
 		<%@ page import="com.dhyan.model.User"%>
 		<%
-		// 1. Extract the user object from session memory
+		// the user object from session memory
 		User loggedInUser = (User) session.getAttribute("user");
 		
-		// 2. CRUCIAL FIX: Protect against NullPointerException if session expires or doesn't exist
+		//Protect against NullPointerException if session expires or doesn't exist
 		if (loggedInUser == null) {
 		    response.sendRedirect("login.jsp?error=SessionExpired");
-		    return; // Stops executing the rest of the page
+		    return;
 		}
 		%>
 		
@@ -195,6 +195,7 @@
 						</button>
 					</div>
 				</section>
+				
 				<!-- Hidden Add Book Pop-Up Modal Template -->
 				<div id="addBookModal" class="modal-overlay"
 					style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
@@ -237,6 +238,7 @@
 									<option value="Self-Help">Self-Help</option>
 									<option value="Fiction">Fiction</option>
 									<option value="Memoir">Memoir</option>
+									<option value="Philosophy">Philosophy</option>
 									<option value="Social Realism Fiction">Social Realism Fiction</option>
 									<option value="Science Fiction">Science Fiction</option>
 									<option value="Other">Other</option>
