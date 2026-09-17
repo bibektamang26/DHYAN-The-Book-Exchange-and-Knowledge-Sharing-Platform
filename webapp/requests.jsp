@@ -97,7 +97,7 @@
                               <input type="hidden" name="statusValue" value="ACCEPTED">
                               <button type="submit" class="btn-accept">Accept</button>
                             </form>
-                            <form action="manage-request" method="POST" style="display:inline;">
+                            <form action="requests" method="POST" style="display:inline;">
                               <input type="hidden" name="requestID" value="<%= req.getRequestID() %>">
                               <input type="hidden" name="statusValue" value="DECLINED">
                               <button type="submit" class="btn-decline">Decline</button>

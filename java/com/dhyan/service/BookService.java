@@ -58,4 +58,11 @@ public class BookService {
         }
         return bookDAO.deleteBookByID(bookID, userID);
     }
+    
+    /**
+     * Book Count
+     */
+    public int bookCountByID(int userID){
+    	return bookDAO.countBooks(userID);
+    }
 }

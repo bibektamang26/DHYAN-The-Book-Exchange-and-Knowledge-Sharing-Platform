@@ -3,6 +3,7 @@ package com.dhyan.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class BookDAO {
                     books.add(book);
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("Error fetching user personal library items: " + e.getMessage());
             e.printStackTrace();
         }
@@ -126,11 +127,33 @@ public class BookDAO {
                     return rs.getInt(1) > 0; // Returns true if a match is found
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("Error checking for duplicate book: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
+    }
+    
+    // Method to count the books on basis of userID
+    public int countBooks(int userID) {
+        int totalBooks = 0;
+        String query = "SELECT COUNT(*) FROM books WHERE userID = ?";
+        
+        try (Connection conn = DBConnection.dbConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setInt(1, userID);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    totalBooks = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return totalBooks;
     }
 
 }
