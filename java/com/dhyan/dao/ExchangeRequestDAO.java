@@ -125,4 +125,25 @@ public class ExchangeRequestDAO {
              return false;
          }
     }
+    
+    // 6. COUNT active requests by ID
+    public int countRequests(int userID) {
+    	int totalRequests = 0;
+    	String query = "SELECT COUNT(*) FROM exchangeRequests WHERE (senderID = ? OR receiverID = ?) AND status = 'PENDING';";
+    	try (Connection conn = DBConnection.dbConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+               
+	    	   ps.setInt(1, userID);
+	           ps.setInt(2, userID);
+               
+               try (ResultSet rs = ps.executeQuery()) {
+                   if (rs.next()) {
+                       totalRequests = rs.getInt(1);
+                   }
+               }
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+    	return totalRequests;
+    }
 }

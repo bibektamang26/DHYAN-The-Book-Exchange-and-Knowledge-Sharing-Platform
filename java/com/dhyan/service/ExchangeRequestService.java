@@ -53,4 +53,11 @@ public class ExchangeRequestService {
         return dao.deleteRequest(requestID, userID);
     }
     
+    /**
+     * Count Requests Service
+     */
+    public int requestCount(int userID) {
+    	return dao.countRequests(userID);
+    }
+    
 }

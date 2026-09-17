@@ -10,7 +10,7 @@
 
   <div class="navigation">
     <nav class="sidebar-nav">
-      <a href="dashboard.jsp" class="nav-item" data-page="dashboard">
+      <a href="dashboard" class="nav-item" data-page="dashboard">
         <i class="fa-solid fa-chart-simple"></i>
         <span>Dashboard</span>
       </a>

@@ -40,7 +40,7 @@ throws ServletException, IOException {
 
 			if (user != null) {
 				session.setAttribute("user", user);
-				response.sendRedirect("dashboard.jsp");
+				response.sendRedirect("dashboard");
 				return;
 			} else {
 				session.setAttribute("errorMessage", "Invalid email or password.");

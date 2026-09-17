@@ -83,7 +83,7 @@ public class AddBookServlet extends HttpServlet {
             session.setAttribute("dashboardErrorMessage", "An internal error occurred while saving your book upload.");
         }
 
-        response.sendRedirect("dashboard.jsp");
+        response.sendRedirect("dashboard");
     }
 
     private String getFileName(Part part) {

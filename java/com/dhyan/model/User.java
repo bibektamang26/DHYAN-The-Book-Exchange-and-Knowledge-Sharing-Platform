@@ -9,6 +9,24 @@ public class User implements Serializable {
 	private int userID;
 	private String fullName;
 	private String email;
+	private int activeRequests;
+	private int booksShared;
+
+	public int getActiveRequests() {
+		return activeRequests;
+	}
+
+	public void setActiveRequests(int activeRequests) {
+		this.activeRequests = activeRequests;
+	}
+
+	public int getBooksShared() {
+		return booksShared;
+	}
+
+	public void setBooksShared(int booksShared) {
+		this.booksShared = booksShared;
+	}
 
 	public int getUserID() {
 		return userID;
@@ -33,5 +51,5 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 }

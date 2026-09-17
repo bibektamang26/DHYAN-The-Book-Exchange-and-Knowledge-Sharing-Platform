@@ -91,7 +91,7 @@
 								class="fa-solid fa-arrow-right-arrow-left"></i></span> <span
 								class="badge badge-active">Active</span>
 						</div>
-						<div class="stat-value">12</div>
+						<div class="stat-value">${sessionScope.user.activeRequests}</div>
 						<div class="stat-label">Active Requests</div>
 					</div>
 
@@ -100,7 +100,7 @@
 							<span class="icon icon-books"><i
 								class="fa-solid fa-book-open"></i></span>
 						</div>
-						<div class="stat-value">47</div>
+						<div class="stat-value">${sessionScope.user.booksShared}</div>
 						<div class="stat-label">Books Shared</div>
 					</div>
 
@@ -110,7 +110,7 @@
 								class="fa-regular fa-star"></i></span> <span class="badge badge-growth">+150
 								this week</span>
 						</div>
-						<div class="stat-value">2,450</div>
+						<div class="stat-value">${sessionScope.user.activeRequests}</div>
 						<div class="stat-label">Community Points</div>
 					</div>
 				</section>
