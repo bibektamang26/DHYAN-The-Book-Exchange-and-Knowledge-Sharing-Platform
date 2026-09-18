@@ -1,5 +1,32 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
+<%@ page import="com.dhyan.model.User"%>
+<%@ page import="com.dhyan.model.Post"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.sql.Timestamp"%>
+
+<%!// Turns a created_at Timestamp into a short relative label like
+	// "2 hours ago" / "Just now" for the post meta line.
+	private String timeAgo(Timestamp createdAt) {
+		if (createdAt == null) {
+			return "";
+		}
+		long diffMs = System.currentTimeMillis() - createdAt.getTime();
+		long minutes = diffMs / (60 * 1000);
+		long hours = minutes / 60;
+		long days = hours / 24;
+
+		if (minutes < 1) {
+			return "Just now";
+		} else if (minutes < 60) {
+			return minutes + (minutes == 1 ? " minute ago" : " minutes ago");
+		} else if (hours < 24) {
+			return hours + (hours == 1 ? " hour ago" : " hours ago");
+		} else {
+			return days + (days == 1 ? " day ago" : " days ago");
+		}
+	}%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,28 +35,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>DHYAN | Community</title>
+
 <link rel="icon" type="image/png" href="assets/icons/logo.png" />
 
 <!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link rel="preconnect" href="https://googleapis.com" />
+<link rel="preconnect" href="https://gstatic.com" />
 <link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap"
+	href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap"
 	rel="stylesheet" />
+<link rel="stylesheet" href="https://cloudflare.com" />
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
 <!-- Global CSS -->
 <link rel="stylesheet" href="assets/css/variables.css" />
 <link rel="stylesheet" href="assets/css/components.css" />
 
-<!-- page css -->
+<!-- Page CSS -->
 <link rel="stylesheet" href="assets/css/community.css" />
 <link rel="stylesheet" href="assets/css/app.css" />
 </head>
-
 <body>
+
 	<div class="layout">
+		<%
+		User loggedInUser = (User) session.getAttribute("user");
+
+		if (loggedInUser == null) {
+			response.sendRedirect("login.jsp?error=SessionExpired");
+			return;
+		}
+		%>
+
 		<div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
@@ -43,35 +81,109 @@
 							<p>Discuss books, share insights, and connect with fellow
 								readers.</p>
 						</div>
-						<!-- <button class="btn-new-post">
-							<i class="fa-solid fa-pen"></i> New Post
-						</button> -->
 					</header>
 
+					<!-- NEW POST -->
 					<div class="new-post-box">
-						<a href="profile.jsp"><img
-							src="assets/images/profile5.png" alt="Your avatar" class="avatar"
-							data-user-avatar /></a>
+						<a href="profile"> <img src="assets/images/default-avatar.png"
+							alt="Your avatar" class="avatar" data-user-avatar />
+						</a>
 						<div class="new-post-input">
-							<textarea type="text" id="new-post-text"
+							<textarea id="new-post-text"
 								placeholder="What are you reading right now? Share your thoughts..."></textarea>
+
 							<div class="new-post-actions">
 								<div class="new-post-icons">
-									<button class="icon-btn">
+									<button type="button" class="icon-btn">
 										<i class="fa-regular fa-image"></i>
 									</button>
-									
 								</div>
-								<button class="btn-post" id="new-post-submit">Post</button>
+								<button type="button" class="btn-post" id="new-post-submit">Post</button>
 							</div>
 						</div>
 					</div>
 
-					<div id="post-feed"></div>
+					<!-- POST FEED -->
+					<div id="post-feed">
+						<%
+						List<Post> posts = (List<Post>) request.getAttribute("posts");
 
-					<button class="btn-load-more" id="load-more-btn">Load More
-						Discussions</button>
+						if (posts != null && !posts.isEmpty()) {
+							for (Post post : posts) {
+						%>
+						<!-- POST CARD -->
+						<article class="post-card" data-post-id="<%=post.getPostID()%>"
+							data-user-id="<%=post.getUserID()%>">
+							<div class="post-header" style="position: relative;">
+								<!-- Added relative positioning for context menu -->
+								<img src="assets/images/default-avatar.png" alt="User avatar"
+									class="avatar" />
+								<div class="post-author-info">
+									<h4><%=post.getAuthorName()%></h4>
+									<p><%=timeAgo(post.getCreated_at())%></p>
+								</div>
+
+								<!-- Action Menu Button Container -->
+								<div class="post-menu-container">
+									<button type="button" class="icon-btn post-menu-btn"
+										data-action="post-menu">
+										<i class="fa-solid fa-ellipsis"></i>
+									</button>
+
+									<%-- ONLY render the context dropdown menu structure if this post belongs to the logged-in user --%>
+									<%
+									if (loggedInUser != null && loggedInUser.getUserID() == post.getUserID()) {
+									%>
+									<div class="post-context-menu"
+										style="display: none; position: absolute; right: 0; top: 100%; background: var(--bg-surface, #fff); border: 1px solid #e2e8f0; border-radius: 6px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 10; min-width: 120px;">
+										<button type="button" class="delete-post-btn"
+											style="width: 100%; text-align: left; padding: 10px 16px; background: none; border: none; color: #ef4444; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+											<i class="fa-regular fa-trash-can"></i> Delete
+										</button>
+									</div>
+									<%
+									}
+									%>
+								</div>
+							</div>
+							<p class="post-text"><%=post.getContent()%></p>
+							<div class="post-footer">
+								<div class="post-stats">
+									<span><i class="fa-regular fa-heart"></i> <%=post.getLikeCount()%></span>
+									<span><i class="fa-regular fa-message"></i> <%=post.getCommentCount()%>
+										Comments</span>
+								</div>
+								<button type="button" class="icon-btn" data-action="share">
+									<i class="fa-solid fa-share-nodes"></i>
+								</button>
+							</div>
+						</article>
+
+						<%
+						}
+						} else {
+						%>
+						<!-- NO POSTS MESSAGE -->
+						<div class="no-posts-message"
+							style="text-align: center; padding: 60px 20px; color: #94a3b8;">
+							<i class="fa-regular fa-comments"
+								style="font-size: 54px; margin-bottom: 20px; color: #cbd5e1;"></i>
+							<h3
+								style="font-family: 'Merriweather', serif; color: var(--text-main); margin-bottom: 8px;">No
+								posts yet</h3>
+							<p>Be the first to share what you're reading with the
+								community.</p>
+						</div>
+						<%
+						}
+						%>
+					</div>
+
+					<button type="button" class="btn-load-more" id="load-more-btn">Load
+						More Discussions</button>
 				</div>
+
+				<!-- RIGHT SIDEBAR -->
 				<aside class="feed-sidebar">
 					<div class="sidebar-card">
 						<h3>
@@ -107,36 +219,26 @@
 								<div class="contributor-info">
 									<p class="contributor-name">Rekha Thapa</p>
 									<p class="contributor-stat">42 Books Shared</p>
-								</div>
-								<button class="icon-btn follow-btn">
-									<i class="fa-solid fa-user-plus"></i>
-								</button></li>
+								</div></li>
 							<li><img src="assets/images/profile3.jpeg"
-								alt="Rajesh Hamal" class="avatar avatar-sm" />
+								alt="Saugat Malla" class="avatar avatar-sm" />
 								<div class="contributor-info">
 									<p class="contributor-name">Saugat Malla</p>
 									<p class="contributor-stat">38 Books Shared</p>
-								</div>
-								<button class="icon-btn follow-btn">
-									<i class="fa-solid fa-user-plus"></i>
-									
-								</button></li>
+								</div></li>
 							<li><img src="assets/images/profile4.jpeg"
 								alt="Suvashan Baniya" class="avatar avatar-sm" />
 								<div class="contributor-info">
 									<p class="contributor-name">Suvashan Baniya</p>
 									<p class="contributor-stat">29 Books Shared</p>
-								</div>
-								<button class="icon-btn follow-btn">
-									<i class="fa-solid fa-user-plus"></i>
-								</button></li>
+								</div></li>
 						</ul>
 					</div>
 				</aside>
 			</div>
 		</main>
 	</div>
-	
+
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/ui.js"></script>
 	<script src="assets/js/community.js"></script>

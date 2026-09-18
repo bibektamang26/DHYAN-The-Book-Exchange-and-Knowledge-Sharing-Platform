@@ -9,6 +9,7 @@
       <li>
         <a href="#services" class="nav-item active">Our Services</a>
       </li>
+      <li>
         <a href="login" class="nav-item">Community</a>
       </li>
       <li>

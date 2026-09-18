@@ -8,28 +8,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dhyan.model.Book;
+import com.dhyan.model.User;
 import com.dhyan.service.BookService;
 
 @WebServlet("/BrowseBooksServlet")
 public class BrowseBooksServlet extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = 1L;
 
-	private BookService bookService = new BookService();
+    private BookService bookService = new BookService();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        User currentUser = (session != null) ? (User) session.getAttribute("user") : null;
         
-        // Retrieve data 
+        if (currentUser == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
         List<Book> dbBooksList = bookService.getAllAvailableBooks();
-        
-        // Expose database object rows context list into the Request Scope attribute map
+
         request.setAttribute("sqlBooksList", dbBooksList);
-        
-        // Forward the array down to the UI JSP view layer
+
         request.getRequestDispatcher("books.jsp").forward(request, response);
     }
 }

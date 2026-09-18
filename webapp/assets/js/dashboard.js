@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("addBookModal");
             if (modal) {
                 modal.style.display = "flex";
-				
             }
         });
     }

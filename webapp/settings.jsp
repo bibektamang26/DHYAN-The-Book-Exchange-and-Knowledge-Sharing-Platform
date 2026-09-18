@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
+<%@ page import="com.dhyan.model.User"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,8 +19,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap"
 	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 <!-- Global CSS -->
 <link rel="stylesheet" href="assets/css/variables.css" />
@@ -32,6 +32,13 @@
 
 <body>
 	<div class="layout">
+		<%
+		User loggedInUser = (User) session.getAttribute("user");
+		if (loggedInUser == null) {
+			response.sendRedirect("login.jsp?error=SessionExpired");
+			return;
+		}
+		%>
 		<div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
@@ -143,19 +150,14 @@
 										class="fa-solid fa-chevron-right"></i>
 								</a></li>
 								<li><a href="#" class="link-danger" id="deactivate-link">
-										<span><i
-											class="fa-solid fa-triangle-exclamation"></i> Delete
-											Account</span> <i class="fa-solid fa-chevron-right"></i>
+										<span><i class="fa-solid fa-triangle-exclamation"></i>
+											Delete Account</span> <i class="fa-solid fa-chevron-right"></i>
 								</a></li>
 							</ul>
 						</div>
 					</div>
 				</section>
 
-				<footer class="settings-footer">
-					<button class="btn-cancel">Cancel</button>
-					<button class="btn-save">Save Changes</button>
-				</footer>
 			</div>
 		</main>
 	</div>

@@ -1,10 +1,11 @@
 <%@page import="com.dhyan.model.User"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
-<%-- FIX 1: Import the required Java Utility List and your local Book Model --%>
+	
 <%@ page import="java.util.List"%>
 <%@ page import="com.dhyan.model.Book"%>
 <%@ page import="com.dhyan.model.User"%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,6 +34,13 @@
 <body>
 
 	<div class="bookspage-layout">
+		<%
+		User loggedInUser = (User) session.getAttribute("user");
+		if (loggedInUser == null) {
+			response.sendRedirect("login.jsp?error=SessionExpired");
+			return;
+		}
+		%>
 		<div id="sidebar">
 			<jsp:include page="/components/sidebar.jsp" />
 		</div>
@@ -42,15 +50,15 @@
 					<div class="search">
 						<i class="fa-solid fa-magnifying-glass"></i> <input type="text"
 							id="book-search"
-							placeholder="Search for books, authors, or ISBN..." />
+							placeholder="Search for books, authors, or users..." />
 					</div>
 				</div>
 				<div class="topbar-actions">
-					<button class="icon-btn" id="notification">
+					<button class="icon-btn" id="notification" style = "cursor:pointer;">
 						<span class="notification-number">1</span> <i
 							class="fa-regular fa-bell"></i>
 					</button>
-					<button class="icon-btn">
+					<button class="icon-btn" onclick="window.location.href='ProfileServlet';" style = "cursor:pointer;">
 						<i class="fa-regular fa-circle-user"></i>
 					</button>
 				</div>
@@ -88,8 +96,8 @@
 						<i class="fa-solid fa-sliders"></i> Clear Filters
 					</button>
 				</div>
-					
-					
+
+
 				<!-- DYNAMIC BOOK GRID -->
 				<div class="book-grid" id="book-grid">
 					<%
@@ -106,8 +114,6 @@
 							if (book.getUserID() == currentUserId) {
 						continue;
 							}
-
-							// Mark that we found a valid book belonging to someone else
 							hasVisibleBooks = true;
 					%>
 					<!-- BOOK CARD -->

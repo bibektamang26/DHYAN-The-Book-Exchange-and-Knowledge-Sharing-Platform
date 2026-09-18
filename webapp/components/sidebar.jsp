@@ -22,7 +22,7 @@
         <i class="fa-solid fa-right-left"></i>
         <span>Requests</span>
       </a>
-      <a href="community.jsp" class="nav-item" data-page="community">
+      <a href="community" class="nav-item" data-page="community">
         <i class="fa-solid fa-users"></i>
         <span>Community</span>
       </a>

@@ -22,8 +22,7 @@
 <link rel="stylesheet" href="assets/css/components.css" />
 
 <!-- Font-awesome -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
 <link rel="stylesheet" href="assets/css/dashboard.css" />
 <link rel="stylesheet" href="assets/css/app.css" />
@@ -203,6 +202,7 @@
 						style="background: var(--card-bg, #fff); padding: 25px; border-radius: 12px; width: 450px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
 
 						<div class="modal-header"
+						
 							style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
 							<h2
 								style="margin: 0; font-family: 'Merriweather', serif; color: var(--text-main);">Add

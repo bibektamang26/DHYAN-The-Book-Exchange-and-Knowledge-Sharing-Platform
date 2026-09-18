@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   var settingsPage = document.querySelector(".settings");
   if (!settingsPage) return;
-
+	
   //  Appearance
   var appearanceCards = document.querySelectorAll(".appearance-card");
   var savedTheme = localStorage.getItem("dhyan-theme") || "light";
